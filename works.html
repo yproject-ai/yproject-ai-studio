@@ -486,7 +486,79 @@ body::before {
   transition: background .2s;
 }
 .lightbox-close:hover { background: rgba(255,255,255,.2); }
+
+/* ── Footer (메인 페이지와 동일) ── */
+footer {
+  padding: 36px 0 32px;
+  background: var(--bg);
+  color: var(--ink-mute);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-top: 60px;
+}
+footer .inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+/* Footer 언어 토글 */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.lang-toggle a {
+  color: var(--ink-mute);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color .2s ease;
+}
+.lang-toggle a:hover {
+  color: var(--ink-soft);
+}
+.lang-toggle a.active {
+  color: var(--ink);
+  font-weight: 600;
+  cursor: default;
+  pointer-events: none;
+}
+.lang-toggle .sep {
+  color: var(--ink-mute);
+  opacity: .5;
+  user-select: none;
+}
 </style>
+
+<!-- ═══════════════════ 언어 자동 감지 + 수동 선택 기억 ═══════════════════ -->
+<script>
+(function() {
+  var CURRENT_LANG = 'kr';
+  var userChoice = null;
+  try { userChoice = localStorage.getItem('yp_lang'); } catch(e) {}
+
+  if (userChoice === CURRENT_LANG) return;
+
+  if (userChoice && userChoice !== CURRENT_LANG) {
+    if (userChoice === 'zh') { location.replace('./zh/works.html'); return; }
+  }
+
+  var browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  if (browserLang.indexOf('zh') === 0) {
+    location.replace('./zh/works.html');
+    return;
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.lang-toggle a[data-lang]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      try { localStorage.setItem('yp_lang', link.getAttribute('data-lang')); } catch(e) {}
+    });
+  });
+});
+</script>
 </head>
 <body>
 
@@ -740,6 +812,18 @@ async function handleQuickContact(e) {
   });
 })();
 </script>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container inner">
+    <div>© YPROJECT.AI · CREATIVE PARTNER FOR FASHION BRANDS</div>
+    <div class="lang-toggle" role="navigation" aria-label="Language selector">
+      <a href="works.html" class="active" aria-current="true" data-lang="kr">KR</a>
+      <span class="sep">·</span>
+      <a href="./zh/works.html" data-lang="zh">CN</a>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

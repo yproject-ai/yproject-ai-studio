@@ -2187,6 +2187,37 @@ footer {
 }
 footer .inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
 
+/* Footer 언어 토글 */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.lang-toggle a {
+  color: var(--ink-mute);            /* 비활성: 어두운 회색 #5A6070 */
+  text-decoration: none;
+  font-weight: 400;
+  transition: color .2s ease;
+}
+.lang-toggle a:hover {
+  color: var(--ink-soft);            /* 호버: #A8ADBA */
+}
+.lang-toggle a.active {
+  color: var(--ink);                 /* 활성: 밝은 색 #F4F4F6 */
+  font-weight: 600;                  /* 살짝 굵게 */
+  cursor: default;
+  pointer-events: none;
+}
+.lang-toggle .sep {
+  color: var(--ink-mute);
+  opacity: .5;
+  user-select: none;
+}
+
 /* ── Tweaks panel ── */
 #tweaks-panel {
   position: fixed;
@@ -2971,6 +3002,45 @@ br.mobile-only {
   }
 }
 </style>
+
+<!-- ═══════════════════ 언어 자동 감지 + 수동 선택 기억 ═══════════════════ -->
+<script>
+(function() {
+  // 현재 페이지 언어 (KR 페이지 = 'kr')
+  var CURRENT_LANG = 'kr';
+
+  // localStorage에 사용자 선택이 저장돼 있으면 그게 최우선
+  var userChoice = null;
+  try { userChoice = localStorage.getItem('yp_lang'); } catch(e) {}
+
+  // 사용자가 KR을 직접 선택한 적이 있으면 자동 감지 무시
+  if (userChoice === CURRENT_LANG) return;
+
+  // 사용자가 다른 언어를 선택한 적이 있으면 그쪽으로 이동
+  if (userChoice && userChoice !== CURRENT_LANG) {
+    if (userChoice === 'zh') { location.replace('./zh/'); return; }
+    // 미래 언어 추가 시 여기에 케이스 추가 (en, ja 등)
+  }
+
+  // 사용자 선택 이력 없음 → 브라우저 언어 자동 감지
+  var browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  if (browserLang.indexOf('zh') === 0) {
+    // 중국어 사용자 → 중국어 페이지로 자동 이동
+    location.replace('./zh/');
+    return;
+  }
+  // 그 외는 한국어 그대로
+})();
+
+// 푸터 언어 토글 클릭 시 사용자 선택 기억
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.lang-toggle a[data-lang]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      try { localStorage.setItem('yp_lang', link.getAttribute('data-lang')); } catch(e) {}
+    });
+  });
+});
+</script>
 </head>
 <body data-theme="noir" data-accent="violet">
 
@@ -3589,7 +3659,11 @@ br.mobile-only {
 <footer>
   <div class="container inner">
     <div>© YPROJECT.AI · CREATIVE PARTNER FOR FASHION BRANDS</div>
-    <div>SEOUL · GOYANG, KR</div>
+    <div class="lang-toggle" role="navigation" aria-label="Language selector">
+      <a href="./" class="active" aria-current="true" data-lang="kr">KR</a>
+      <span class="sep">·</span>
+      <a href="./zh/" data-lang="zh">CN</a>
+    </div>
   </div>
 </footer>
 
