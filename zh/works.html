@@ -177,16 +177,52 @@ body::before {
    페이지 헤더
    ═══════════════════════════════════════════════════════ */
 .works-header {
-  padding: 140px 0 60px;
-  text-align: center;
+  padding: 50px 0 20px;
+  text-align: left;
 }
-.works-header h1 {
+.works-header .page-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--ink-mute);
+  margin: 0 0 14px;
+}
+.works-header .works-title {
   font-family: var(--kor);
-  font-size: clamp(30px, 3.4vw, 42px);
+  font-size: clamp(28px, 3.4vw, 38px);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 0;
+  letter-spacing: -0.01em;
   color: var(--ink);
+  margin: 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+.section-head:not(:first-child) {
+  margin-top: 56px;
+}
+.section-head .section-name {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.section-head .section-line {
+  flex: 1;
+  height: 1px;
+  background: #3A3F52;
+}
+@media (max-width: 640px) {
+  .works-header { padding: 110px 0 36px; }
+  .section-head { gap: 12px; margin-bottom: 12px; }
+  .section-head:not(:first-child) { margin-top: 40px; }
+  .section-head .section-name { font-size: 13px; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -233,7 +269,8 @@ body::before {
 }
 .work-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(124,92,255,.4);
+  box-shadow: 0 0 24px rgba(255,255,255,.35), 0 0 40px rgba(124,92,255,.25);
+  border-color: rgba(255,255,255,.45);
 }
 .work-card > img,
 .work-card > video {
@@ -604,14 +641,18 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ═══════════════════ 페이지 헤더 ═══════════════════ -->
 <header class="works-header">
   <div class="container">
-    <h1>YPROJECT 作品集</h1>
+    <p class="page-label">// REFERENCES</p>
+    <h1 class="works-title">ALL WORKS</h1>
   </div>
 </header>
 
 <!-- ═══════════════════ 갤러리 ═══════════════════ -->
 <div class="container">
   <div class="works-main">
-    <!-- 이미지 그리드 (3:4 × 5열) — STUDIO + DAILY + CAMPAIGN 통합 -->
+    <div class="section-head">
+      <span class="section-name">STUDIO</span>
+      <span class="section-line"></span>
+    </div>
     <div class="works-grid-img">
       <div class="work-card ratio-3-4"><img src="../images/studio-01.webp" alt="Studio 01" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/studio-02.webp" alt="Studio 02" loading="lazy"></div>
@@ -628,6 +669,13 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="work-card ratio-3-4"><img src="../images/studio-13.webp" alt="Studio 13" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/studio-14.webp" alt="Studio 14" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/studio-15.webp" alt="Studio 15" loading="lazy"></div>
+    </div>
+
+    <div class="section-head">
+      <span class="section-name">DAILY</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="works-grid-img">
       <div class="work-card ratio-3-4"><img src="../images/daily-01.webp" alt="Daily 01" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/daily-02.webp" alt="Daily 02" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/daily-03.webp" alt="Daily 03" loading="lazy"></div>
@@ -658,6 +706,13 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="work-card ratio-3-4"><img src="../images/daily-28.webp" alt="Daily 28" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/daily-29.webp" alt="Daily 29" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/daily-30.webp" alt="Daily 30" loading="lazy"></div>
+    </div>
+
+    <div class="section-head">
+      <span class="section-name">CAMPAIGN</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="works-grid-img">
       <div class="work-card ratio-3-4"><img src="../images/campaign-01.webp" alt="Campaign 01" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/campaign-02.webp" alt="Campaign 02" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="../images/campaign-03.webp" alt="Campaign 03" loading="lazy"></div>
@@ -665,7 +720,10 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="work-card ratio-3-4"><img src="../images/campaign-05.webp" alt="Campaign 05" loading="lazy"></div>
     </div>
 
-    <!-- 영상 그리드 (9:16 × 5열) — UGC -->
+    <div class="section-head">
+      <span class="section-name">UGC VIDEO</span>
+      <span class="section-line"></span>
+    </div>
     <div class="works-grid-video">
       <div class="work-card ratio-9-16"><video src="../images/ugc-01.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
       <div class="work-card ratio-9-16"><video src="../images/ugc-02.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
