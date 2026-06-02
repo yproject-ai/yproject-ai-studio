@@ -1740,6 +1740,14 @@ section.tight { padding: 80px 0; }
   right: 16px; background: var(--grad-primary); color: #fff; border-color: transparent;
 }
 
+/* 모바일 전용 줄바꿈 (PC에선 무시, 720px 이하에서만 줄바꿈) */
+.mo-br { display: none; }
+@media (max-width: 720px) {
+  .mo-br { display: inline; }
+  /* 데일리 헤드라인 모바일에서 고정폭(550px) 해제 → 잘림 방지 */
+  #showcase-daily .section-head h2 { width: auto !important; }
+}
+
 /* ── Daily Phone Mockup (샤오홍슈 + 신상마켓) ── */
 .daily-phones {
   display: flex; gap: 28px; justify-content: center;
@@ -3676,7 +3684,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="head-meta">
         <div class="eyebrow reveal">02 / DAILY CUT</div>
         <h2 class="reveal delay-1" style="width: 550px;">
-          일상이 콘텐츠가 되는<br/>
+          일상이 <br class="mo-br"/>콘텐츠가 되는<br/>
           <span class="grad-fill">DAILY CUT</span>
         </h2>
       </div>
