@@ -1177,6 +1177,34 @@ section.tight { padding: 80px 0; }
   .campaign-grid, .campaign-row { gap: 8px; }
 }
 
+/* Lookbook 3행: 3:4·3:2 / 3:2·3:4 / 3:4·3:4·3:4 */
+.lookbook-grid {
+  display: grid;
+  gap: 12px;
+}
+.lookbook-row {
+  display: grid;
+  gap: 12px;
+}
+/* 1행: 왼쪽 좁음(3:4) · 오른쪽 넓음(3:2) */
+.lookbook-row-b { grid-template-columns: 1fr 2fr; }
+/* 2행: 왼쪽 넓음(3:2) · 오른쪽 좁음(3:4) */
+.lookbook-row-a { grid-template-columns: 2fr 1fr; }
+/* 3행: 3등분 세로컷 */
+.lookbook-row-c { grid-template-columns: 1fr 1fr 1fr; }
+
+.lookbook-grid .gcard { grid-column: auto; }
+/* 2fr(넓음)=3:2, 1fr(좁음)=3:4 → 좌우 높이 일치 */
+.lookbook-row-b .gcard:nth-child(1) { aspect-ratio: 3/4; }
+.lookbook-row-b .gcard:nth-child(2) { aspect-ratio: 3/2; }
+.lookbook-row-a .gcard:nth-child(1) { aspect-ratio: 3/2; }
+.lookbook-row-a .gcard:nth-child(2) { aspect-ratio: 3/4; }
+.lookbook-row-c .gcard { aspect-ratio: 3/4; }
+
+@media (max-width: 560px) {
+  .lookbook-grid, .lookbook-row { gap: 8px; }
+}
+
 /* ════════════════ Carousel ════════════════ */
 .carousel-wrap {
   position: relative;
@@ -1710,6 +1738,279 @@ section.tight { padding: 80px 0; }
 }
 .ba-label.after {
   right: 16px; background: var(--grad-primary); color: #fff; border-color: transparent;
+}
+
+/* ── Daily Phone Mockup (샤오홍슈 + 신상마켓) ── */
+.daily-phones {
+  display: flex; gap: 28px; justify-content: center;
+  align-items: flex-start; flex-wrap: wrap;
+}
+.dphone {
+  width: 320px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center;
+}
+.dphone-screen {
+  width: 100%; height: 620px;
+  border: 2px solid rgba(255,255,255,0.22);
+  border-radius: 44px; padding: 0;
+  overflow-y: auto; overflow-x: hidden;
+  background: #fff; position: relative;
+  scrollbar-width: none;
+}
+.dphone-screen::-webkit-scrollbar { display: none; }
+.dphone-notch {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 26px; background: #000; border-radius: 16px; z-index: 20;
+}
+.dphone { position: relative; }
+.dphone-label {
+  margin-top: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.dphone-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+.dphone-label span {
+  font-family: var(--kor); font-size: 14px; font-weight: 500;
+  color: #fff; letter-spacing: 0;
+}
+
+/* 샤오홍슈 */
+.rb-screen { background: #fff; }
+.rb-header {
+  background: linear-gradient(180deg,#2a2a2a,#1a1a1a);
+  padding: 56px 18px 18px;
+}
+.rb-profile { display: flex; gap: 14px; padding: 0; align-items: center; }
+.rb-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #fff center/cover no-repeat;
+  flex-shrink: 0;
+}
+.rb-info { padding-bottom: 0; }
+.rb-name { font-size: 20px; font-weight: 800; color: #fff; }
+.rb-id, .rb-ip { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+.rb-stats { display: flex; gap: 18px; padding: 18px 2px 0; font-size: 12px; color: rgba(255,255,255,0.6); }
+.rb-stats b { color: #fff; font-size: 14px; }
+.rb-btns { display: flex; gap: 8px; padding: 18px 0 0; align-items: center; }
+.rb-follow { background: #fe2c55; color: #fff; font-size: 14px; font-weight: 600; padding: 11px 0; border-radius: 22px; flex: 1; text-align: center; }
+.rb-dm { background: rgba(255,255,255,0.12); color: #fff; font-size: 14px; font-weight: 600; padding: 11px 0; border-radius: 22px; flex: 1; text-align: center; }
+.rb-icon { background: rgba(255,255,255,0.12); color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.rb-tab { padding: 12px 18px; font-size: 14px; font-weight: 700; color: #1a1a1a; background: #fff; }
+.rb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; background: #f5f5f5; }
+.rb-card { background: #fff; border-radius: 8px; overflow: hidden; }
+.rb-card .dimg { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; cursor: zoom-in; background: #e5e5e5; }
+.rb-meta { padding: 8px 9px; }
+.rb-title { font-size: 11px; color: #1a1a1a; line-height: 1.3; }
+.rb-like { font-size: 10px; color: #999; margin-top: 4px; }
+
+/* 신상마켓 */
+.ss-screen { background: #fff; }
+.ss-header { padding: 52px 16px 16px; text-align: center; background: linear-gradient(180deg,#2a2a2a,#1a1a1a); }
+.ss-logo { width: 78px; height: 78px; border-radius: 50%; background: #fff center/cover no-repeat; margin: 8px auto 14px; }
+.ss-rank { display: inline-block; background: #fff; color: #3b5bdb; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; }
+.ss-name { font-size: 23px; font-weight: 800; color: #fff; }
+.ss-loc { font-size: 12px; color: #aaa; margin-top: 8px; }
+.ss-metrics { display: flex; justify-content: space-around; margin: 18px 0; }
+.ss-metrics div { display: flex; flex-direction: column; gap: 3px; }
+.ss-metrics span { font-size: 11px; color: #999; }
+.ss-metrics b { font-size: 15px; color: #fff; }
+.ss-btns { display: flex; gap: 6px; }
+.ss-btn { flex: 1; background: #333; color: #eee; font-size: 12px; font-weight: 600; padding: 12px 0; border-radius: 8px; text-align: center; }
+.ss-btn-sm { flex: 0 0 46px; }
+.ss-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap: 8px; padding: 12px; background: #fff; }
+.ss-card { min-width: 0; }
+.ss-card .dimg { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; cursor: zoom-in; background: #eee; border-radius: 8px; }
+.ss-meta { padding: 7px 1px 0; min-width: 0; }
+.ss-title { font-size: 10px; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ss-price { font-size: 12px; font-weight: 800; color: #1a1a1a; margin-top: 4px; }
+.ss-zzim { font-size: 10px; color: #bbb; margin-top: 3px; }
+
+@media (max-width: 720px) {
+  .daily-phones { flex-direction: column; align-items: center; gap: 36px; }
+  .dphone { width: 100%; max-width: 360px; }
+}
+
+/* ── Open Event (진입 첫 화면) ── */
+.open-event {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 80px 24px;
+  background: radial-gradient(ellipse at 50% 38%, rgba(124,92,255,0.13), transparent 62%);
+}
+.open-event-inner {
+  display: flex; flex-direction: column; align-items: center;
+  max-width: 900px;
+}
+.oe-line1 {
+  font-family: 'Pretendard Variable', var(--sans);
+  font-size: clamp(44px, 8vw, 84px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.18;
+  color: #f4f5fa; margin: 0 0 18px; min-height: 1.2em;
+}
+.oe-line2 {
+  font-family: 'Pretendard Variable', var(--kor);
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 600; line-height: 1.45;
+  color: #cfd1da; margin: 0 0 40px; min-height: 1.4em;
+}
+.oe-line1 .grad, .oe-line2 .grad {
+  background: var(--grad-primary);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.oe-cursor { border-right: 2px solid var(--accent); padding-right: 2px; }
+.oe-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--grad-primary); color: #fff;
+  font-family: 'Pretendard Variable', var(--kor);
+  font-size: 16px; font-weight: 600;
+  padding: 16px 38px; border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(124,92,255,0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.oe-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 38px rgba(124,92,255,0.5); }
+.oe-arrow { font-family: var(--sans); }
+.oe-scroll {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-decoration: none;
+}
+.oe-scroll-txt {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; color: #5a5c6a;
+}
+.oe-scroll-arrow {
+  color: #5a5c6a; font-size: 18px;
+  animation: oe-bounce 1.6s ease-in-out infinite;
+}
+@keyframes oe-bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(7px);} }
+@keyframes oe-blink { 50%{border-color:transparent;} }
+
+/* ── Pricing Tabs (LOOK BOOK / DAILY / UGC) ── */
+.price-tabs {
+  display: flex; gap: 10px;
+  margin: 0 0 28px;
+}
+.price-tab {
+  flex: 1; padding: 12px 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-mute);
+  font-family: var(--mono);
+  font-size: 13px; font-weight: 600; letter-spacing: .05em;
+  cursor: pointer;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.price-tab:hover { color: var(--ink-soft); border-color: var(--ink-mute); }
+.price-tab.is-active {
+  background: var(--grad-primary);
+  color: #fff; border-color: transparent;
+}
+.price-cards {
+  display: grid; gap: 14px;
+  align-items: stretch;
+}
+.pcard {
+  background: var(--bg-card, #1E2130);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 22px 20px;
+  position: relative;
+  z-index: 0;
+  display: flex; flex-direction: column;
+  transition: transform .4s cubic-bezier(0.16,1,0.3,1), box-shadow .4s ease, border-color .3s;
+}
+.pcard:hover { transform: translateY(-4px); border-color: rgba(124,92,255,.3); }
+.pcard.is-hot {
+  --price-rotation: 0deg;
+  border-color: rgba(124,92,255,.5);
+}
+.pcard.is-hot::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--price-rotation),
+    transparent 0%,
+    rgba(124, 92, 255, 0.7) 30%,
+    rgba(61, 226, 240, 0.55) 50%,
+    rgba(124, 92, 255, 0.7) 70%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+  animation: price-rotate-border 8s linear infinite;
+}
+.pcard-badge {
+  position: absolute; top: 18px; right: 20px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; color: var(--g3, #FF5AD9);
+}
+.pcard-name {
+  display: inline-block; align-self: flex-start;
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  letter-spacing: .06em; color: #fff;
+  background: var(--grad-primary);
+  padding: 4px 13px; border-radius: 20px;
+  margin-bottom: 14px;
+}
+.pcard-amount { margin-bottom: 12px; display: flex; align-items: baseline; gap: 6px; margin-left: -2px; }
+.pcard-amount .num {
+  font-family: var(--sans);
+  font-size: 44px; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(170,120,255,.32), 0 0 20px rgba(120,200,255,.18);
+}
+.pcard-amount .won {
+  font-family: var(--sans); font-size: 16px; font-weight: 600;
+  color: var(--ink-soft);
+}
+.pcard-qty {
+  font-family: var(--mono); font-size: 13px;
+  letter-spacing: .06em; color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.pcard-list {
+  list-style: none; padding: 0; margin: 0 0 18px;
+  display: grid; gap: 8px; flex: 1;
+}
+.pcard-list li {
+  font-size: 13px; color: var(--ink-soft);
+  padding-left: 15px; position: relative; line-height: 1.45;
+}
+.pcard-list li::before {
+  content: "·"; position: absolute; left: 0;
+  color: var(--accent); font-weight: 700;
+}
+.pcard-cta {
+  text-align: center; font-size: 13px; color: var(--ink-soft);
+  border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 0; text-decoration: none;
+  transition: border-color .2s, color .2s;
+}
+.pcard-cta:hover { border-color: var(--accent); color: var(--ink); }
+@media (max-width: 720px) {
+  .price-cards { grid-template-columns: 1fr !important; }
+  .price-tabs { max-width: 100%; }
 }
 
 /* ── Pricing ── */
@@ -2286,7 +2587,6 @@ footer .inner { display: flex; justify-content: space-between; flex-wrap: wrap; 
   line-height: 1.15;
   letter-spacing: -0.025em;
 }
-#showcase-campaign .section-head .head-meta h2 { width: 550px; max-width: 100%; }
 
 /* & 기호만 별도 폰트 - 평범하고 명확한 시스템 폰트 (디자인 변형 X) */
 #compare .section-head .head-meta h2 .ampersand {
@@ -2296,7 +2596,6 @@ footer .inner { display: flex; justify-content: space-between; flex-wrap: wrap; 
 }
 #showcase-studio .head-meta h2 strong,
 #showcase-daily .head-meta h2 strong,
-#showcase-campaign .head-meta h2 strong,
 #compare .head-meta h2 strong,
 #pricing .head-meta h2 strong { font-weight: 800; }
 .section-head .head-desc { text-align: left !important; }
@@ -3077,9 +3376,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </a>
     <!-- 기존 섹션 네비 (숨김 처리 — 복구 시 아래 블록의 주석만 풀기)
     <div class="nav-links" style="font-size: 15px; width: 500px; font-weight: 600; color: rgb(189, 194, 208);">
-      <a href="#showcase-studio">Studio</a>
+      <a href="#showcase-studio">Look Book</a>
       <a href="#showcase-daily">Daily</a>
-      <a href="#showcase-campaign">Campaign</a>
       <a href="#ugc">UGC</a>
       <a href="#compare">Compare</a>
       <a href="#pricing">Pricing</a>
@@ -3095,6 +3393,19 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </nav>
+
+<!-- ═══════════════════ OPEN EVENT (진입 첫 화면) ═══════════════════ -->
+<section class="open-event" id="open-event">
+  <div class="open-event-inner">
+    <h1 class="oe-line1" data-text="샘플 제작비 0원"></h1>
+    <h2 class="oe-line2" data-text="단 한 달, 비용 없이 결과부터 확인하세요."></h2>
+    <a href="#contact" class="oe-btn">무료 샘플 요청하기 <span class="oe-arrow">→</span></a>
+  </div>
+  <a href="#problem" class="oe-scroll" aria-label="아래로 스크롤">
+    <span class="oe-scroll-txt">SCROLL</span>
+    <span class="oe-scroll-arrow">↓</span>
+  </a>
+</section>
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero" style="padding: 200px 0 30px;">
@@ -3150,30 +3461,26 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="marquee" style="padding: 15px 0;">
   <div class="marquee-track" style="font-family: Archivo; font-weight: 600;">
     <span>
-      STUDIO CUT<span class="dot"></span>
+      LOOK BOOK<span class="dot"></span>
       DAILY CUT<span class="dot"></span>
-      CAMPAIGN<span class="dot"></span>
       UGC VIDEO<span class="dot"></span>
       <span class="mute">CREATED BY YPROJECT.AI</span><span class="dot"></span>
     </span>
     <span>
-      STUDIO CUT<span class="dot"></span>
+      LOOK BOOK<span class="dot"></span>
       DAILY CUT<span class="dot"></span>
-      CAMPAIGN<span class="dot"></span>
       UGC VIDEO<span class="dot"></span>
       <span class="mute">CREATED BY YPROJECT.AI</span><span class="dot"></span>
     </span>
     <span>
-      STUDIO CUT<span class="dot"></span>
+      LOOK BOOK<span class="dot"></span>
       DAILY CUT<span class="dot"></span>
-      CAMPAIGN<span class="dot"></span>
       UGC VIDEO<span class="dot"></span>
       <span class="mute">CREATED BY YPROJECT.AI</span><span class="dot"></span>
     </span>
     <span>
-      STUDIO CUT<span class="dot"></span>
+      LOOK BOOK<span class="dot"></span>
       DAILY CUT<span class="dot"></span>
-      CAMPAIGN<span class="dot"></span>
       UGC VIDEO<span class="dot"></span>
       <span class="mute">CREATED BY YPROJECT.AI</span><span class="dot"></span>
     </span>
@@ -3308,42 +3615,55 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="container">
     <div class="section-head">
       <div class="head-meta">
-        <div class="eyebrow reveal">01 / STUDIO CUT</div>
+        <div class="eyebrow reveal">01 / LOOK BOOK</div>
         <h2 class="reveal delay-1">
-          제품이 돋보이는<br/>
-          <span class="grad-fill">STUDIO CUT</span>
+          한 시즌을 완성하는<br/>
+          <span class="grad-fill">LOOK BOOK</span>
         </h2>
       </div>
       <p class="head-desc reveal delay-2">
-        무신사 · 브랜디 · 신상마켓<br/>
-        어떤 플랫폼에서도 흔들리지 않는 균일한 컷.
+        스튜디오컷으로 디테일을, 캠페인컷으로 브랜드 무드를.<br/>
+        상세페이지부터 인스타그램까지, 시즌 전체를 한 번에.
       </p>
     </div>
 
-    <div class="showcase-grid reveal" data-gallery="studio-grid">
-      <div class="gcard" data-cat="studio">
-        <img src="images/studio-01.webp" alt="Studio 01 - Women Knit" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 01</div><div class="tag">WOMEN · KNIT</div></div>
+    <div class="lookbook-grid reveal" data-gallery="studio-grid">
+      <!-- 1행: 3:4 | 3:2 -->
+      <div class="lookbook-row lookbook-row-b">
+        <div class="gcard" data-cat="studio">
+          <img src="images/lookbook-01.webp" alt="Lookbook 01" loading="lazy">
+          <div class="gcard-meta"><div class="loc">STUDIO 01</div><div class="tag">WOMEN · KNIT</div></div>
+        </div>
+        <div class="gcard" data-cat="campaign">
+          <img src="images/lookbook-02.webp" alt="Lookbook 02" loading="lazy">
+          <div class="gcard-meta"><div class="loc">"Drifting Edges"</div><div class="tag">SS KEY VISUAL</div></div>
+        </div>
       </div>
-      <div class="gcard" data-cat="studio">
-        <img src="images/studio-02.webp" alt="Studio 02 - Women Denim" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 02</div><div class="tag">WOMEN · DENIM</div></div>
+      <!-- 2행: 3:2 | 3:4 -->
+      <div class="lookbook-row lookbook-row-a">
+        <div class="gcard" data-cat="campaign">
+          <img src="images/lookbook-03.webp" alt="Lookbook 03" loading="lazy">
+          <div class="gcard-meta"><div class="loc">"Sun Ritual"</div><div class="tag">HOLIDAY CAPSULE</div></div>
+        </div>
+        <div class="gcard" data-cat="studio">
+          <img src="images/lookbook-04.webp" alt="Lookbook 04" loading="lazy">
+          <div class="gcard-meta"><div class="loc">STUDIO 02</div><div class="tag">WOMEN · DENIM</div></div>
+        </div>
       </div>
-      <div class="gcard" data-cat="studio">
-        <img src="images/studio-03.webp" alt="Studio 03 - Men Outer" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 03</div><div class="tag">MEN · OUTER</div></div>
-      </div>
-      <div class="gcard" data-cat="flat">
-        <img src="images/studio-04.webp" alt="Studio 04 - Flat Accessory" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 04</div><div class="tag">FLAT · ACCESSORY</div></div>
-      </div>
-      <div class="gcard" data-cat="studio">
-        <img src="images/studio-05.webp" alt="Studio 05 - Women Dress" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 05</div><div class="tag">WOMEN · DRESS</div></div>
-      </div>
-      <div class="gcard" data-cat="studio">
-        <img src="images/studio-06.webp" alt="Studio 06 - Men Suit" loading="lazy">
-        <div class="gcard-meta"><div class="loc">STUDIO 06</div><div class="tag">MEN · SUIT</div></div>
+      <!-- 3행: 3:4 | 3:4 | 3:4 -->
+      <div class="lookbook-row lookbook-row-c">
+        <div class="gcard" data-cat="studio">
+          <img src="images/lookbook-05.webp" alt="Lookbook 05" loading="lazy">
+          <div class="gcard-meta"><div class="loc">STUDIO 03</div><div class="tag">MEN · OUTER</div></div>
+        </div>
+        <div class="gcard" data-cat="studio">
+          <img src="images/lookbook-06.webp" alt="Lookbook 06" loading="lazy">
+          <div class="gcard-meta"><div class="loc">STUDIO 05</div><div class="tag">WOMEN · DRESS</div></div>
+        </div>
+        <div class="gcard" data-cat="studio">
+          <img src="images/lookbook-07.webp" alt="Lookbook 07" loading="lazy">
+          <div class="gcard-meta"><div class="loc">STUDIO 06</div><div class="tag">MEN · SUIT</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -3356,96 +3676,84 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="head-meta">
         <div class="eyebrow reveal">02 / DAILY CUT</div>
         <h2 class="reveal delay-1" style="width: 550px;">
-          일상과 가까운<br/>
+          일상이 콘텐츠가 되는<br/>
           <span class="grad-fill">DAILY CUT</span>
         </h2>
       </div>
       <p class="head-desc reveal delay-2">
-        국내•해외 시간과 공간의 제약 없이, 어디서든<br/>
-        시딩, 광고에 바로 쓰는 라이프스타일 컷.
+        인스타·신상마켓·쇼핑몰부터 브랜드 콘텐츠까지.<br/>
+        촬영 없이 끊김 없이, 필요한 만큼 매일 새로 채웁니다.
       </p>
     </div>
 
-    <div class="showcase-grid reveal" data-gallery="daily-grid">
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-01.webp" alt="Hannam, Seoul - Daytime" loading="lazy">
-        <div class="gcard-meta"><div class="loc">HANNAM, SEOUL</div><div class="tag">KR · DAYTIME</div></div>
+    <div class="daily-phones reveal">
+      <!-- ════ 샤오홍슈 ════ -->
+      <div class="dphone">
+        <div class="dphone-notch"></div>
+        <div class="dphone-screen rb-screen">
+          <div class="rb-header">
+            <div class="rb-profile">
+              <div class="rb-avatar" style="background-image:url('images/redbook-avatar.webp');"></div>
+              <div class="rb-info">
+                <div class="rb-name">Yproject.ai</div>
+                <div class="rb-id">rednote ID : 84726195038</div>
+                <div class="rb-ip">IP : Zhejiang</div>
+              </div>
+            </div>
+            <div class="rb-stats"><span><b>0</b> 팔로우</span><span><b>2.6천</b> 팬</span><span><b>8.5천</b> 받은 좋아요/찜</span></div>
+            <div class="rb-btns"><div class="rb-follow">팔로우</div><div class="rb-dm">DM 발송</div><div class="rb-icon">+</div></div>
+          </div>
+          <div class="rb-tab">게시물</div>
+          <div class="rb-grid">
+            <div class="rb-card"><img class="dimg" src="images/daily-01.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">春日穿搭灵感</div><div class="rb-like">♡ 1,243</div></div></div>
+            <div class="rb-card"><img class="dimg" src="images/daily-02.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">这件针织也太美了</div><div class="rb-like">♡ 892</div></div></div>
+            <div class="rb-card"><img class="dimg" src="images/daily-03.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">通勤穿搭分享</div><div class="rb-like">♡ 2,051</div></div></div>
+            <div class="rb-card"><img class="dimg" src="images/daily-04.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">显瘦神器牛仔裤</div><div class="rb-like">♡ 667</div></div></div>
+            <div class="rb-card"><img class="dimg" src="images/daily-05.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">周末休闲look</div><div class="rb-like">♡ 1,408</div></div></div>
+            <div class="rb-card"><img class="dimg" src="images/daily-06.webp" alt="" loading="lazy"><div class="rb-meta"><div class="rb-title">秋冬必入单品</div><div class="rb-like">♡ 935</div></div></div>
+          </div>
+        </div>
+        <div class="dphone-label"><img class="dphone-icon" src="images/redbook-icon.webp" alt=""><span>샤오홍슈 (小红书)</span></div>
       </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-02.webp" alt="Dotonbori, Osaka - Neon Glow" loading="lazy">
-        <div class="gcard-meta"><div class="loc">DOTONBORI, OSAKA</div><div class="tag">JP · NEON GLOW</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-03.webp" alt="Duomo, Milan - Golden Hour" loading="lazy">
-        <div class="gcard-meta"><div class="loc">DUOMO, MILAN</div><div class="tag">IT · GOLDEN HOUR</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-04.webp" alt="Soho, New York - Overcast" loading="lazy">
-        <div class="gcard-meta"><div class="loc">SOHO, NEW YORK</div><div class="tag">US · OVERCAST</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-05.webp" alt="Shibuya, Tokyo - Nighttime" loading="lazy">
-        <div class="gcard-meta"><div class="loc">SHIBUYA, TOKYO</div><div class="tag">JP · NIGHTTIME</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-06.webp" alt="Marais, Paris - Soft Light" loading="lazy">
-        <div class="gcard-meta"><div class="loc">MARAIS, PARIS</div><div class="tag">FR · SOFT LIGHT</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-07.webp" alt="Seongsu, Seoul - Street" loading="lazy">
-        <div class="gcard-meta"><div class="loc">SEONGSU, SEOUL</div><div class="tag">KR · STREET</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-08.webp" alt="Shoreditch, London - Cloudy" loading="lazy">
-        <div class="gcard-meta"><div class="loc">SHOREDITCH, LONDON</div><div class="tag">UK · CLOUDY</div></div>
-      </div>
-      <div class="gcard" data-cat="daily">
-        <img src="images/daily-09.webp" alt="Venice, LA - Sunset" loading="lazy">
-        <div class="gcard-meta"><div class="loc">VENICE, LA</div><div class="tag">US · SUNSET</div></div>
+
+      <!-- ════ 신상마켓 ════ -->
+      <div class="dphone">
+        <div class="dphone-notch"></div>
+        <div class="dphone-screen ss-screen">
+          <div class="ss-header">
+            <div class="ss-logo" style="background-image:url('images/redbook-avatar.webp');"></div>
+            <div class="ss-rank">🏆 인기 TOP 1위 ›</div>
+            <div class="ss-name">와이프로젝트</div>
+            <div class="ss-loc">📍 APM 7층 1 &nbsp;|&nbsp; 거래처 5,300</div>
+            <div class="ss-metrics"><div><span>노출수</span><b>TOP 2%</b></div><div><span>재방문</span><b>TOP 4%</b></div><div><span>클릭수</span><b>TOP 4%</b></div></div>
+            <div class="ss-btns"><div class="ss-btn">내 거래처</div><div class="ss-btn">매장 정보</div><div class="ss-btn ss-btn-sm">💬</div></div>
+          </div>
+          <div class="ss-grid">
+            <div class="ss-card"><img class="dimg" src="images/daily-07.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">데이즈 니트 (26SS, 긴팔)</div><div class="ss-price">₩29,000</div><div class="ss-zzim">♡ 14</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-08.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">턱 와이드 슬랙스 (26SS)</div><div class="ss-price">₩32,000</div><div class="ss-zzim">♡ 42</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-09.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">오픈카라 셔츠 (26SS, 반팔)</div><div class="ss-price">₩29,000</div><div class="ss-zzim">♡ 29</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-10.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">헨리넥 니트 (26SS)</div><div class="ss-price">₩25,000</div><div class="ss-zzim">♡ 18</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-11.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">베이직 반팔티 (26SS)</div><div class="ss-price">₩15,000</div><div class="ss-zzim">♡ 9</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-12.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">체크 오버셔츠 (26SS)</div><div class="ss-price">₩29,000</div><div class="ss-zzim">♡ 67</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-13.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">슬리브리스 탑 (26SS)</div><div class="ss-price">₩12,000</div><div class="ss-zzim">♡ 42</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-14.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">린넨 무드셔츠 (26SS)</div><div class="ss-price">₩34,000</div><div class="ss-zzim">♡ 32</div></div></div>
+            <div class="ss-card"><img class="dimg" src="images/daily-15.webp" alt="" loading="lazy"><div class="ss-meta"><div class="ss-title">투턱 코튼팬츠 (26SS)</div><div class="ss-price">₩38,000</div><div class="ss-zzim">♡ 83</div></div></div>
+          </div>
+        </div>
+        <div class="dphone-label"><img class="dphone-icon" src="images/sinsang-icon.webp" alt=""><span>신상마켓</span></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ═══════════════════ CAMPAIGN ═══════════════════ -->
-<section id="showcase-campaign" class="tight" data-screen-label="06 Campaign">
-  <div class="container">
-    <div class="section-head">
-      <div class="head-meta">
-        <div class="eyebrow reveal">03 / CAMPAIGN</div>
-        <h2 class="reveal delay-1">
-          시간과 공간을 넘는<br/>
-          <span class="grad-fill">CAMPAIGN</span>
-        </h2>
-      </div>
-      <p class="head-desc reveal delay-2">
-        브랜드 시즌 제품을 위한<br/>
-        SS/FW 비주얼 · 리브랜딩 키비주얼<br/>
-        시대와 공간을 넘나들어 작은 소품까지 디테일하게.
-      </p>
-    </div>
-
-    <div class="campaign-grid reveal" data-gallery="campaign">
-      <div class="campaign-row campaign-row-a">
-        <div class="gcard" data-cat="campaign">
-          <img src="images/campaign-01.webp" alt="Drifting Edges - SS Key Visual" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Drifting Edges"</div><div class="tag">SS KEY VISUAL</div></div>
-        </div>
-        <div class="gcard" data-cat="campaign">
-          <img src="images/campaign-02.webp" alt="Steel Bloom - Lookbook Cover" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Steel Bloom"</div><div class="tag">LOOKBOOK COVER</div></div>
-        </div>
-      </div>
-      <div class="campaign-row campaign-row-b">
-        <div class="gcard" data-cat="campaign">
-          <img src="images/campaign-03.webp" alt="Soft Protocol - FW Editorial" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Soft Protocol"</div><div class="tag">FW EDITORIAL</div></div>
-        </div>
-        <div class="gcard" data-cat="campaign">
-          <img src="images/campaign-04.webp" alt="Sun Ritual - Holiday Capsule" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Sun Ritual"</div><div class="tag">HOLIDAY CAPSULE</div></div>
-        </div>
-      </div>
+    <div class="showcase-grid reveal" data-gallery="daily-extra" style="margin-top:48px;">
+      <div class="gcard" data-cat="daily"><img src="images/daily-16.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-17.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-18.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-19.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-20.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-21.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-22.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-23.webp" alt="" loading="lazy"></div>
+      <div class="gcard" data-cat="daily"><img src="images/daily-24.webp" alt="" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -3455,17 +3763,15 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="container">
     <div class="section-head">
       <div class="head-meta">
-        <div class="eyebrow reveal">04 / UGC VIDEO</div>
+        <div class="eyebrow reveal">03 / UGC VIDEO</div>
         <h2 class="reveal delay-1">
-          인플루언서 <span class="grad-fill">0</span>명.<br/>
-          UGC <span class="grad-fill">30</span>편.
+          인플루언서 <span class="grad-fill">0</span>명,<br/>
+          UGC <span class="grad-fill">30</span>편
         </h2>
       </div>
       <p class="head-desc reveal delay-2">
-        광고 같지 않은 광고.<br/>
-        인플루언서 없이 제작하는 세로형 숏폼.<br/>
-        짧은 호흡과 자연스러운 연출로,<br/>
-        광고가 아닌 콘텐츠로 소비됩니다.
+        인스타·신상마켓·샤오홍슈부터 패션 플랫폼까지.<br/>
+        국내를 넘어 전 세계로, 광고가 아닌 콘텐츠로 닿습니다.<br/>
       </p>
     </div>
 
@@ -3515,53 +3821,23 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="eyebrow reveal">// PRICING</div>
         <h2 class="reveal delay-1">
           시즌 콘텐츠,<br/>
-          <span class="grad-fill">90%</span>절감,<br/>
-          <span class="grad-fill">49만원</span>부터.
+          <span class="grad-fill">1/10</span> 비용으로,<br/>
+          <span class="grad-fill">59만원</span>부터.
         </h2>
       </div>
       <p class="head-desc reveal delay-2">
-        촬영비용 1,000만원이 49만원이 됩니다.<br/>
-        실제 촬영의 5% 비용으로, 시즌 전체 콘텐츠를 운영하세요.
+        일년에 네번, 한 시즌 촬영 비용 1,000만원.<br/>
+        시즌 전체 콘텐츠를 59만원으로 시작하세요.
       </p>
     </div>
 
-    <div class="price-grid price-grid-2">
-      <div class="price-card price-card-split reveal">
-        <div class="price-card-left">
-          <div class="price-category-tag" style="font-size: 13px">▸ UGC<br class="mobile-only"/> <span class="mobile-prefix">// </span>VIDEO PACKAGE</div>
-          <div class="price-name" style="margin: 0px">BASIC</div>
-          <div class="price-amount" style="margin: 0px"><span class="price-num-glow">49</span><span class="won">만원~</span></div>
-          <div class="price-desc">UGC 영상 3편 + 보너스 1편.<br/>숏폼 테스트에 최적.</div>
-        </div>
-        <div class="price-card-right">
-          <ul class="price-list">
-            <li>UGC 3편 <span style="color:var(--accent); font-weight:700;">+ 1편 서비스</span></li>
-            <li>15~30초 세로형</li>
-            <li>Reels · Shorts · TikTok 비율</li>
-            <li>평균 리드타임 3일</li>
-          </ul>
-          <a href="#contact" class="btn ghost price-cta">Contact →</a>
-        </div>
-      </div>
-
-      <div class="price-card price-card-split reveal delay-1">
-        <div class="price-card-left" style="margin: 0px; border-width: 0px; border-style: solid; padding: 0px 20px 0px 0px">
-          <div class="price-category-tag" style="font-size: 13px">▸ STUDIO<br class="mobile-only"/> <span class="mobile-prefix">// </span>DAILY PACKAGE</div>
-          <div class="price-name" style="margin: 0px">STARTER</div>
-          <div class="price-amount" style="margin: 0px"><span class="price-num-glow">59</span><span class="won">만원~</span></div>
-          <div class="price-desc">스튜디오 8착장 / 데일리 15컷.<br/><span class="desc-desktop">제품 페이지에 바로 업로드 가능한 최소 단위.</span><span class="desc-mobile">제품 페이지에 바로 업로드 가능.</span></div>
-        </div>
-        <div class="price-card-right">
-          <ul class="price-list" style="line-height: 0; opacity: 1">
-            <li>STUDIO 8착장 / DAILY 15컷</li>
-            <li>2:3 · 1:1 · 4:5 비율 납품</li>
-            <li>상업용 저작권 포함</li>
-            <li>평균 리드타임 5일</li>
-          </ul>
-          <a href="#contact" class="btn ghost price-cta">Contact →</a>
-        </div>
-      </div>
+    <div class="price-tabs reveal" id="priceTabs">
+      <button class="price-tab is-active" data-pkg="look">LOOK BOOK</button>
+      <button class="price-tab" data-pkg="daily">DAILY</button>
+      <button class="price-tab" data-pkg="ugc">UGC</button>
     </div>
+
+    <div class="price-cards reveal delay-1" id="priceCards"></div>
 
     <div class="price-note">// VAT 10% EXCLUDED</div>
   </div>
@@ -3845,7 +4121,99 @@ document.querySelectorAll('.ugc-card').forEach((c, i) => {
 
 // B/A — 실제 이미지는 HTML에 직접 삽입됨. 여기서는 드래그 로직만 작동.
 
-// Gallery filter
+// ── Pricing tabs (LOOK BOOK / DAILY / UGC) ──
+const PRICE_DATA = {
+  look: [
+    { name:"STARTER",  amount:"150", qty:"30 CUT",  hot:false,
+      li:["스튜디오컷 & 캠페인컷","총 30컷","상세페이지·인스타 즉시 사용","평균 리드타임 7일"] },
+    { name:"STANDARD", amount:"250", qty:"60 CUT",  hot:true,
+      li:["스튜디오컷 & 캠페인컷","총 60컷","상세페이지·인스타 즉시 사용","평균 리드타임 7일"] },
+    { name:"SEASON",   amount:"500", qty:"150 CUT", hot:false,
+      li:["스튜디오컷 & 캠페인컷","총 150컷","시즌 전체 비주얼 일괄","평균 리드타임 7일"] },
+  ],
+  daily: [
+    { name:"STARTER",  amount:"59",  qty:"15 CUT", hot:false,
+      li:["데일리컷 15컷","인스타·쇼핑몰·신상마켓","1:1·2:3·3:4·4:5 등 원하는 비율로 납품","평균 리드타임 5일"] },
+    { name:"STANDARD", amount:"100", qty:"30 CUT", hot:true,
+      li:["데일리컷 30컷","인스타·쇼핑몰·신상마켓","1:1·2:3·3:4·4:5 등 원하는 비율로 납품","평균 리드타임 5일"] },
+  ],
+  ugc: [
+    { name:"STARTER",  amount:"59",  qty:"4 VIDEO", hot:false,
+      li:["기본 3편 + 서비스 1편","편당 14만원대부터","10~20초 세로형 · Reels · Shorts","평균 리드타임 3일"] },
+    { name:"STANDARD", amount:"100", qty:"7 VIDEO", hot:true,
+      li:["기본 6편 + 서비스 1편","편당 14만원대부터","10~20초 세로형 · Reels · Shorts","평균 리드타임 3일"] },
+  ],
+};
+
+function renderPriceCards(pkg) {
+  const wrap = document.getElementById('priceCards');
+  if (!wrap) return;
+  const cards = PRICE_DATA[pkg] || [];
+  wrap.style.gridTemplateColumns = 'repeat(' + cards.length + ', 1fr)';
+  wrap.innerHTML = cards.map(c => `
+    <div class="pcard${c.hot ? ' is-hot' : ''}">
+      ${c.hot ? '<div class="pcard-badge">★ POPULAR</div>' : ''}
+      <div class="pcard-name">${c.name}</div>
+      <div class="pcard-amount"><span class="num">${c.amount}</span><span class="won">만원</span></div>
+      <div class="pcard-qty">${c.qty}</div>
+      <ul class="pcard-list">${c.li.map(x => '<li>' + x + '</li>').join('')}</ul>
+      <a href="#contact" class="pcard-cta">Contact →</a>
+    </div>
+  `).join('');
+}
+
+const priceTabs = document.getElementById('priceTabs');
+if (priceTabs) {
+  priceTabs.querySelectorAll('.price-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      priceTabs.querySelectorAll('.price-tab').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      renderPriceCards(btn.dataset.pkg);
+    });
+  });
+  renderPriceCards('look');
+}
+
+
+// ── Open Event 타이핑 애니메이션 ──
+(function(){
+  const sec = document.getElementById('open-event');
+  if (!sec) return;
+  const l1 = sec.querySelector('.oe-line1');
+  const l2 = sec.querySelector('.oe-line2');
+
+  // 그라데이션 강조: 0원 / 한 달
+  function finalHtml1(t){ return t.replace('0원', '<span class="grad">0원</span>'); }
+  function finalHtml2(t){ return t.replace('한 달', '<span class="grad">한 달</span>'); }
+
+  function typeIt(el, full, finalHtml, cb){
+    let i = 0;
+    el.classList.add('oe-cursor');
+    el.style.animation = 'oe-blink 0.7s step-end infinite';
+    const iv = setInterval(function(){
+      el.textContent = full.slice(0, i); i++;
+      if (i > full.length){
+        clearInterval(iv);
+        el.innerHTML = finalHtml;
+        el.classList.remove('oe-cursor');
+        el.style.animation = '';
+        if (cb) cb();
+      }
+    }, 55);
+  }
+
+  function play(){
+    const t1 = l1.dataset.text, t2 = l2.dataset.text;
+    l1.textContent = ''; l2.textContent = '';
+    typeIt(l1, t1, finalHtml1(t1), function(){
+      setTimeout(function(){ typeIt(l2, t2, finalHtml2(t2)); }, 250);
+    });
+  }
+
+  // 진입 시 1회 재생
+  play();
+})();
+
 document.querySelectorAll('[data-tabs]').forEach(tabset => {
   const key = tabset.dataset.tabs;
   const gal = document.querySelector(`[data-gallery="${key}"]`);
@@ -4416,12 +4784,19 @@ document.querySelectorAll('[data-block]').forEach(block => {
   });
 
   // showcase-grid (Studio/Daily) 와 campaign-grid 의 .gcard에도 lightbox 적용
-  document.querySelectorAll('.showcase-grid .gcard, .campaign-grid .gcard').forEach(card => {
+  document.querySelectorAll('.showcase-grid .gcard, .campaign-grid .gcard, .lookbook-grid .gcard').forEach(card => {
     card.addEventListener('click', () => {
       const imgEl = card.querySelector('img');
       if (imgEl && imgEl.src) {
         openLightbox(imgEl.src, imgEl.alt);
       }
+    });
+  });
+
+  // 데일리 폰 목업 이미지(.dimg)에도 lightbox 적용
+  document.querySelectorAll('.daily-phones .dimg').forEach(img => {
+    img.addEventListener('click', () => {
+      if (img.src) openLightbox(img.src, img.alt);
     });
   });
 })();

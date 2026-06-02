@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yproject-ai-studio.netlify.app/works.html">
 <meta property="og:title" content="Yproject.ai · References">
-<meta property="og:description" content="AI로 제작한 패션 콘텐츠 레퍼런스. STUDIO · DAILY · CAMPAIGN · UGC.">
+<meta property="og:description" content="AI로 제작한 패션 콘텐츠 레퍼런스. LOOK BOOK · STUDIO · DAILY · UGC.">
 <meta property="og:image" content="https://yproject-ai-studio.netlify.app/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +18,7 @@
 <!-- ═══════════════════ Twitter Card (트위터/디스코드) ═══════════════════ -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Yproject.ai · References">
-<meta name="twitter:description" content="AI로 제작한 패션 콘텐츠 레퍼런스. STUDIO · DAILY · CAMPAIGN · UGC.">
+<meta name="twitter:description" content="AI로 제작한 패션 콘텐츠 레퍼런스. LOOK BOOK · STUDIO · DAILY · UGC.">
 <meta name="twitter:image" content="https://yproject-ai-studio.netlify.app/images/og-image.jpg">
 
 <title>레퍼런스 — Yproject.ai</title>
@@ -583,6 +583,12 @@ body::before {
 <div class="container">
   <div class="works-main">
     <div class="section-head">
+      <span class="section-name">LOOK BOOK</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="works-grid-img" id="lookbook-auto"></div>
+
+    <div class="section-head">
       <span class="section-name">STUDIO</span>
       <span class="section-line"></span>
     </div>
@@ -639,18 +645,6 @@ body::before {
       <div class="work-card ratio-3-4"><img src="images/daily-28.webp" alt="Daily 28" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="images/daily-29.webp" alt="Daily 29" loading="lazy"></div>
       <div class="work-card ratio-3-4"><img src="images/daily-30.webp" alt="Daily 30" loading="lazy"></div>
-    </div>
-
-    <div class="section-head">
-      <span class="section-name">CAMPAIGN</span>
-      <span class="section-line"></span>
-    </div>
-    <div class="works-grid-img">
-      <div class="work-card ratio-3-4"><img src="images/campaign-01.webp" alt="Campaign 01" loading="lazy"></div>
-      <div class="work-card ratio-3-4"><img src="images/campaign-02.webp" alt="Campaign 02" loading="lazy"></div>
-      <div class="work-card ratio-3-4"><img src="images/campaign-03.webp" alt="Campaign 03" loading="lazy"></div>
-      <div class="work-card ratio-3-4"><img src="images/campaign-04.webp" alt="Campaign 04" loading="lazy"></div>
-      <div class="work-card ratio-3-4"><img src="images/campaign-05.webp" alt="Campaign 05" loading="lazy"></div>
     </div>
 
     <div class="section-head">
@@ -835,6 +829,37 @@ async function handleQuickContact(e) {
       else if (video) openLightbox('video', video.src, '');
     });
   });
+
+  // ── LOOK BOOK 자동 채움 (lookbook-01.webp 부터 연속 번호, 있는 만큼) ──
+  (function(){
+    const grid = document.getElementById('lookbook-auto');
+    if (!grid) return;
+    const MAX = 60;  // 최대 시도 (실제 있는 만큼만 표시됨)
+    const pad = n => (n < 10 ? '0' : '') + n;
+    // URL과 함께 이미지의 실제 가로/세로(landscape 여부)도 반환
+    const loadOne = n => new Promise(resolve => {
+      const url = 'images/lookbook-' + pad(n) + '.webp';
+      const probe = new Image();
+      probe.onload = () => resolve({ url, landscape: probe.naturalWidth > probe.naturalHeight });
+      probe.onerror = () => resolve(null);
+      probe.src = url;
+    });
+    (async function(){
+      for (let n = 1; n <= MAX; n++){
+        const res = await loadOne(n);
+        if (!res) break;  // 처음 없는 번호에서 멈춤
+        const card = document.createElement('div');
+        card.className = 'work-card ratio-3-4';
+        const img = document.createElement('img');
+        img.src = res.url; img.alt = 'Lookbook ' + pad(n); img.loading = 'lazy';
+        // 가로 이미지는 세로 틀에서 위쪽(얼굴)이 살아남도록 top 정렬
+        if (res.landscape) img.style.objectPosition = 'top center';
+        card.appendChild(img);
+        card.addEventListener('click', () => openLightbox('img', img.src, img.alt));
+        grid.appendChild(card);
+      }
+    })();
+  })();
 })();
 </script>
 
