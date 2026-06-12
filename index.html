@@ -24,6 +24,8 @@
 <meta name="twitter:image" content="https://yproject.co.kr/images/og-image.jpg">
 
 <title>Yproject.ai — AI Fashion Content Pipeline</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -286,6 +288,11 @@ nav.topnav .inner {
 }
 .nav-links a:hover { color: var(--ink); }
 @media (max-width: 880px) { .nav-links { display: none; } }
+.nav-insta-link:hover { color: var(--ink) !important; }
+@media (max-width: 768px) {
+  .nav-insta-link .insta-text { display: none; }
+  .nav-insta-link svg { width: 20px; height: 20px; }
+}
 .nav-works-link:hover { color: var(--ink) !important; }
 
 /* ── Status bar ── */
@@ -1186,23 +1193,36 @@ section.tight { padding: 80px 0; }
   display: grid;
   gap: 12px;
 }
-/* 1행: 왼쪽 좁음(3:4) · 오른쪽 넓음(3:2) */
-.lookbook-row-b { grid-template-columns: 1fr 2fr; }
-/* 2행: 왼쪽 넓음(3:2) · 오른쪽 좁음(3:4) */
-.lookbook-row-a { grid-template-columns: 2fr 1fr; }
-/* 3행: 3등분 세로컷 */
-.lookbook-row-c { grid-template-columns: 1fr 1fr 1fr; }
+/* a행, c행: 균등 2열 세로컷(3:4) */
+.lookbook-row-a { grid-template-columns: 1fr 1fr; }
+.lookbook-row-c { grid-template-columns: 1fr 1fr; }
+.lookbook-row-a .gcard,
+.lookbook-row-c .gcard { aspect-ratio: 3/4; }
+
+/* b행: 3(가로 3:2) + 4(세로 3:4), 같은 높이로 전체 폭.
+   3은 칸을 채우고, 4는 같은 높이의 세로 비율(좁음) → 오른쪽 여백 */
+.lookbook-row-b {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.lookbook-row-b .gcard-wide {
+  aspect-ratio: 3/2;
+  width: 100%;
+}
+.lookbook-row-b .gcard-tall {
+  aspect-ratio: 3/4;
+  height: 100%;
+  width: auto;
+  justify-self: start;
+}
 
 .lookbook-grid .gcard { grid-column: auto; }
-/* 2fr(넓음)=3:2, 1fr(좁음)=3:4 → 좌우 높이 일치 */
-.lookbook-row-b .gcard:nth-child(1) { aspect-ratio: 3/4; }
-.lookbook-row-b .gcard:nth-child(2) { aspect-ratio: 3/2; }
-.lookbook-row-a .gcard:nth-child(1) { aspect-ratio: 3/2; }
-.lookbook-row-a .gcard:nth-child(2) { aspect-ratio: 3/4; }
-.lookbook-row-c .gcard { aspect-ratio: 3/4; }
 
 @media (max-width: 560px) {
   .lookbook-grid, .lookbook-row { gap: 8px; }
+  .lookbook-row-b { gap: 8px; }
 }
 
 /* ════════════════ Carousel ════════════════ */
@@ -3392,6 +3412,10 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     -->
     <div class="nav-right" style="display: flex; align-items: center; gap: 20px;">
+      <a href="https://www.instagram.com/yproject.ai/" target="_blank" rel="noopener" class="nav-insta-link" style="display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:rgb(189,194,208); text-decoration:none; letter-spacing:0.02em; transition:color .2s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <span class="insta-text">@yproject.ai</span>
+      </a>
       <a href="works.html" class="nav-works-link" style="font-size: 13px; font-weight: 600; color: rgb(189, 194, 208); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color .2s;">
         레퍼런스
       </a>
@@ -3443,23 +3467,23 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="container">
     <div class="hero-collage reveal delay-3" id="heroCollage">
       <div class="tile t1" data-tone="studio"><img class="tile-img" src="images/hero-01.webp" alt="Studio hero visual" loading="eager"/>
-        <span class="tile-label" style="font-size: 13px;">DAILY</span>
+        <span class="tile-label" style="font-size: 13px;">26SUMMER</span>
       </div>
       <div class="tile t2" data-tone="daily">
         <img class="tile-img" src="images/hero-02.webp" alt="Daily hero visual" loading="eager"/>
-        <span class="tile-label" style="font-size: 13px;">DAILY</span>
+        <span class="tile-label" style="font-size: 13px;">26SUMMER</span>
       </div>
       <div class="tile t3" data-tone="campaign">
         <img class="tile-img" src="images/hero-03.webp" alt="Campaign hero visual" loading="eager"/>
-        <span class="tile-label" style="font-size: 13px;">DAILY</span>
+        <span class="tile-label" style="font-size: 13px;">26SUMMER</span>
       </div>
       <div class="tile t4" data-tone="daily">
         <img class="tile-img" src="images/hero-04.webp" alt="Daily hero visual" loading="eager"/>
-        <span class="tile-label" style="font-size: 13px;">DAILY</span>
+        <span class="tile-label" style="font-size: 13px;">26SUMMER</span>
       </div>
       <div class="tile t5" data-tone="studio">
         <img class="tile-img" src="images/hero-05.webp" alt="Studio hero visual" loading="eager"/>
-        <span class="tile-label" style="font-size: 13px;">STUDIO</span>
+        <span class="tile-label" style="font-size: 13px;">26SUMMER</span>
       </div>
     </div>
   </div>
@@ -3636,41 +3660,31 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <div class="lookbook-grid reveal" data-gallery="studio-grid">
-      <!-- 1행: 3:4 | 3:2 -->
-      <div class="lookbook-row lookbook-row-b">
-        <div class="gcard" data-cat="studio">
-          <img src="images/lookbook-01.webp" alt="Lookbook 01" loading="lazy">
-          <div class="gcard-meta"><div class="loc">STUDIO 01</div><div class="tag">WOMEN · KNIT</div></div>
-        </div>
-        <div class="gcard" data-cat="campaign">
-          <img src="images/lookbook-02.webp" alt="Lookbook 02" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Drifting Edges"</div><div class="tag">SS KEY VISUAL</div></div>
-        </div>
-      </div>
-      <!-- 2행: 3:2 | 3:4 -->
+      <!-- a행: 3:4 | 3:4 -->
       <div class="lookbook-row lookbook-row-a">
-        <div class="gcard" data-cat="campaign">
-          <img src="images/lookbook-03.webp" alt="Lookbook 03" loading="lazy">
-          <div class="gcard-meta"><div class="loc">"Sun Ritual"</div><div class="tag">HOLIDAY CAPSULE</div></div>
+        <div class="gcard" data-cat="studio">
+          <img src="images/idx-lookbook-01.webp" alt="Lookbook 01" loading="lazy">
         </div>
         <div class="gcard" data-cat="studio">
-          <img src="images/lookbook-04.webp" alt="Lookbook 04" loading="lazy">
-          <div class="gcard-meta"><div class="loc">STUDIO 02</div><div class="tag">WOMEN · DENIM</div></div>
+          <img src="images/idx-lookbook-02.webp" alt="Lookbook 02" loading="lazy">
         </div>
       </div>
-      <!-- 3행: 3:4 | 3:4 | 3:4 -->
+      <!-- b행: 3:2(가로) | 3:4(세로, 3번 높이에 맞춤) — 전체 폭 확대 -->
+      <div class="lookbook-row lookbook-row-b">
+        <div class="gcard gcard-wide" data-cat="studio">
+          <img src="images/idx-lookbook-03.webp" alt="Lookbook 03" loading="lazy">
+        </div>
+        <div class="gcard gcard-tall" data-cat="studio">
+          <img src="images/idx-lookbook-04.webp" alt="Lookbook 04" loading="lazy">
+        </div>
+      </div>
+      <!-- c행: 3:4 | 3:4 -->
       <div class="lookbook-row lookbook-row-c">
         <div class="gcard" data-cat="studio">
-          <img src="images/lookbook-05.webp" alt="Lookbook 05" loading="lazy">
-          <div class="gcard-meta"><div class="loc">STUDIO 03</div><div class="tag">MEN · OUTER</div></div>
+          <img src="images/idx-lookbook-05.webp" alt="Lookbook 05" loading="lazy">
         </div>
         <div class="gcard" data-cat="studio">
-          <img src="images/lookbook-06.webp" alt="Lookbook 06" loading="lazy">
-          <div class="gcard-meta"><div class="loc">STUDIO 05</div><div class="tag">WOMEN · DRESS</div></div>
-        </div>
-        <div class="gcard" data-cat="studio">
-          <img src="images/lookbook-07.webp" alt="Lookbook 07" loading="lazy">
-          <div class="gcard-meta"><div class="loc">STUDIO 06</div><div class="tag">MEN · SUIT</div></div>
+          <img src="images/idx-lookbook-06.webp" alt="Lookbook 06" loading="lazy">
         </div>
       </div>
     </div>
@@ -4182,6 +4196,26 @@ if (priceTabs) {
   renderPriceCards('look');
 }
 
+
+// ── 룩북 b행: 4번(세로) 높이를 3번(가로)에 맞춤 ──
+(function(){
+  const rowB = document.querySelector('.lookbook-row-b');
+  if (!rowB) return;
+  const wide = rowB.querySelector('.gcard-wide');
+  const tall = rowB.querySelector('.gcard-tall');
+  if (!wide || !tall) return;
+  function sync(){
+    const h = wide.getBoundingClientRect().height;
+    if (h > 0) tall.style.height = h + 'px';
+  }
+  // 이미지 로드 후/리사이즈 시 동기화
+  window.addEventListener('load', sync);
+  window.addEventListener('resize', sync);
+  const wImg = wide.querySelector('img');
+  if (wImg && !wImg.complete) wImg.addEventListener('load', sync);
+  setTimeout(sync, 100);
+  setTimeout(sync, 500);
+})();
 
 // ── Open Event 타이핑 애니메이션 ──
 (function(){
